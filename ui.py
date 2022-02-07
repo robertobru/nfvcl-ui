@@ -39,15 +39,15 @@ app.title = 'NFVCL'
 # =============================================================================
 # Dash Admin Components
 # =============================================================================
-right_ui = dac.NavbarDropdown(
-    badge_label="!",
-    badge_color="danger",
-    # src="https://quantee.ai",
-    header_text="2 Items",
-    children=[dac.NavbarDropdownItem(children="message 1", date="today")]
-)
+# right_ui = dac.NavbarDropdown(
+#     badge_label="!",
+#     badge_color="danger",
+#     # src="https://quantee.ai",
+#     header_text="2 Items",
+#     children=[dac.NavbarDropdownItem(children="message 1", date="today")]
+# )
 
-navbar = dac.Navbar(color="white", children=right_ui)
+# navbar = dac.Navbar(color="white", children=right_ui)
 
 sidebar = dac.Sidebar(
     dac.SidebarMenu([
@@ -93,10 +93,10 @@ url_location = dcc.Location(id='url', refresh=False)
 # =============================================================================
 # App Layout
 # =============================================================================
-app.layout = dac.Page([url_location, navbar, sidebar, body, footer])
+app.layout = dac.Page([url_location,  sidebar, body, footer])  # navbar,
 app.validation_layout = html.Div([
     url_location,
-    navbar,
+    # navbar,
     sidebar,
     body,
     footer,
