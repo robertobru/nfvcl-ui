@@ -114,7 +114,8 @@ def build_table(name, columns, data, bottom_buttons=None, intable_buttons=None, 
         for b in bottom_buttons:
             children_ = [html.I(className='fa {}'.format(b['icon'])), "  {}".format(b['label'])]
             if 'href' in b:
-                buttons.append(dcc.Link(children=children_, href=b['href'], className="btn btn-primary"))
+                buttons.append(dcc.Link(children=children_, href=b['href'],
+                                        className="btn btn-{}".format(b['color']), style={'margin-left': '12px'}))
             else:
                 buttons.append(dbc.Button(
                     children_,

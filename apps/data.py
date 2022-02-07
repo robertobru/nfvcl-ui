@@ -13,7 +13,7 @@ blue_data_generic = []
 blue_detailed = []
 nsi_data = []
 vnf_data = []
-
+blue_type = []
 
 def get_dynamic_data():
     return {
@@ -22,7 +22,8 @@ def get_dynamic_data():
         'blue_data_generic': blue_data_generic,
         'blue_detailed': blue_detailed,
         'nsi_data': nsi_data,
-        'vnf_data': blue_vnfs
+        'vnf_data': blue_vnfs,
+        'blue_type': blue_type
     }
 
 
@@ -50,9 +51,12 @@ def add_blue(body):
 
 def poll():
     global topology_data_raw, blue_data_generic, blue_detailed, nsi_data, vnf_data, pdu_data_raw, vnf_data_raw, \
-        blue_vnfs
+        blue_vnfs, blue_type
     while True:
         # print('@@@ resting')
+        blue_type = requests.get(
+            "{}/nfvcl/api/bluetype".format(nfvcl_base_url), params=None, verify=False, stream=True,
+            headers=get_headers).json()
         topology_data_raw = requests.get(
             "{}/nfvcl/api/topology".format(nfvcl_base_url), params=None, verify=False, stream=True,
             headers=get_headers).json()

@@ -121,37 +121,30 @@ home_elements = html.Div([
     ]),
     dbc.Row(
         [
-            dbc.Col(
-                Box(
-                    "Network Service Graph",
-                    html.Div(
-                        visdcc.Network(
-                            id='home_graph',
-                            options=dict(height='500px', width='100%', autoResize=True),
-                            data={'nodes': [], 'edges': []}
-                        )
+            getTile(
+                html.Div(
+                    visdcc.Network(
+                        id='home_graph',
+                        options=dict(height='500px', width='100%', autoResize=True),
+                        data={'nodes': [], 'edges': []}
                     )
-                ).get(),
-                width=6
+                ), title="Network Service Graph", color="light", width=6
             ),
-            dbc.Col(
-                Box(
-                    "Categories of Blueprint Instances",
-                    html.Div(
-                        dcc.Graph(
-                            id='home_bargraph',
-                            figure={
-                                'data': [
-                                    # {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                                    # {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
-                                ],
-                                'layout': {}
-                            },
-                        ),
-                        style={'height': '500px'}
-                    )
-                ).get(),
-                width=6
+            getTile(
+                html.Div(
+                    dcc.Graph(
+                        id='home_bargraph',
+                        figure={
+                            'data': [
+                                # {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
+                                # {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
+                            ],
+                            'layout': {}
+                        },
+                    ),
+                    style={'height': '500px'}
+                ),
+                width=6, color="light", title="Blueprint Instance Types",
             )
         ]
     ),

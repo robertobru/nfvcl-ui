@@ -276,6 +276,20 @@ class AddBluePage(WebPage):
                                      if isinstance(item, dict) and item['id'] == 'addblue_selected_vimlist'), [])
                     vim_core = next((item['value'] for item in dash.callback_context.states_list \
                                      if isinstance(item, dict) and item['id'] == 'addblue_core_vim'), None)
+
+                    tacs = {}
+                    for t_vim in dash.callback_context.states_list[3]:
+                        # print(print('5**************** {}'.format(t_vim)))
+                        if isinstance(t_vim, dict) and t_vim['id']['id'] == 'vim':
+                            # print('***************** {}'.format(t_vim))
+                            if t_vim['value'] not in tacs:
+                                tacs[t_vim['value']] = []
+                            for t_tac in dash.callback_context.states_list[3]:
+                                if isinstance(t_tac, dict) and t_tac['id']['index'] == t_vim['id']['index'] and \
+                                        t_tac['id']['id'] == 'tac':
+                                    tacs[t_vim['value']].append({'id': t_tac['value']})
+
+                    print('*************************** {}'.format(tacs))
                     for v in vim_list:
                         msg_body['vims'].append(
                             {
@@ -287,7 +301,7 @@ class AddBluePage(WebPage):
                                 },
                                 'mgt': mgt,
                                 'sgi': sgi,
-                                'tacs': []
+                                'tacs': tacs[v] if v in tacs else []
                             }
                         )
                     print(msg_body)
@@ -297,4 +311,6 @@ class AddBluePage(WebPage):
                     else:
                         color = 'danger'
 
-                    return [dbc.Badge(code, color=color), json.dumps(rmesg)]
+                    return dbc.Col(
+                        html.H5([dbc.Badge(code, color=color), json.dumps(rmesg)]),
+                        width=12, style={'background-color': 'light'})

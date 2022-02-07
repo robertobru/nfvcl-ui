@@ -25,7 +25,7 @@ window.myNamespace = Object.assign({}, window.myNamespace, {
             console.log(cell.getData())
 
             if (cell.getValue() == 'processing')
-                return "<span><i class='fa fa-spinner fa-sm text-warning'></i></span>";
+                return "<span><i class='fa fa-spinner fa-spin spinnerClassName text-warning'></i></span>";
             if (cell.getValue() == 'error')
                 return "<span><i class='fa fa-exclamation-circle fa-sm text-danger'></i></span>";
             if (cell.getValue() == 'idle')

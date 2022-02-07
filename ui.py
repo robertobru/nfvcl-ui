@@ -47,15 +47,15 @@ app.title = 'NFVCL'
 #     children=[dac.NavbarDropdownItem(children="message 1", date="today")]
 # )
 
-# navbar = dac.Navbar(color="white", children=right_ui)
+navbar = dac.Navbar(color="white", children=[])  # right_ui
 
 sidebar = dac.Sidebar(
     dac.SidebarMenu([
         # dac.SidebarHeader(children="Cards"),
         get_menuitem(icon='fa-home', label='Overview', href='/'),
         get_menuitem(icon='fa-project-diagram', label='Topology', href='/topology'),
-        get_menuitem(icon='fa-database', label='Blueprints', href='/blueprints'),
-        get_menuitem(icon='fa-box', label='Helm Repository', href='/helm'),
+        get_menuitem(icon='fa-box', label='Blueprints', href='/blueprints'),
+        get_menuitem(icon='fa-database', label='Helm Repository', href='/helm'),
         get_menuitem(icon='fa-address-card', label='UEs', href='/blueprints'),
     ]),
     title='NFVCL web UI',
@@ -69,7 +69,7 @@ sidebar = dac.Sidebar(
 )
 
 # Body
-body = dac.Body(id='page-content')
+body = dac.Body(dbc.Row(id='page-content', style={'height': '900px'}))
 
 # page_objs = [TopologyPage(app), ]
 topology_page = TopologyPage(app)
@@ -81,25 +81,25 @@ blue_detail_page = BlueDetailPage(app)
 editor = Editor(app)
 
 # Footer
-footer = dac.Footer(
-    html.A("CNIT S2N National Laboratory",
-           href="https://s2n.cnit.it",
-           target="_blank",
-           ),
-    right_text="2022"
-)
+# footer = dac.Footer(
+#     html.A("CNIT S2N National Laboratory",
+#            href="https://s2n.cnit.it",
+#            target="_blank",
+#            ),
+#     right_text="2022"
+# )
 
 url_location = dcc.Location(id='url', refresh=False)
 # =============================================================================
 # App Layout
 # =============================================================================
-app.layout = dac.Page([url_location,  sidebar, body, footer])  # navbar,
+app.layout = dac.Page([url_location,  sidebar, navbar, body, ])  # , footer
 app.validation_layout = html.Div([
     url_location,
-    # navbar,
+    navbar,
     sidebar,
     body,
-    footer,
+    # footer,
     topology_page.get(),
     home_page.get(),
     blue_page.get(),

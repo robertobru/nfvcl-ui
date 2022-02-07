@@ -1,5 +1,6 @@
-from dash_extensions.enrich import Output, Input
-from dash_extensions.javascript import Namespace
+import dash
+from dash_extensions.enrich import Output, Input, State
+# from dash_extensions.javascript import Namespace
 
 from apps.data import get_dynamic_data
 from apps.utils import *
@@ -68,40 +69,25 @@ class BluePage(WebPage):
                 Output({'type': 'tabulator', 'name': 'blueprints'}, "data"),
                 # Output("blueprints_table", "columns")
             ],
-            Input('blueprints_interval', 'n_intervals')
+            Input('blueprints_interval', 'n_intervals'),
+            State({'type': 'tabulator', 'name': 'blueprints'}, "data")
         )
-        def blueprints_refresh(interval):
-            global blue_data_generic
-
-            # labels = [b['id'] for b in get_dynamic_data()['blue_data_generic']]
-            # print('---------- blueprints_refresh {}'.format(labels))
+        def blueprints_refresh(interval, old_data):
             data = get_dynamic_data()['blue_data_generic']
             for item in data:
                 label = item['id'] if 'id' in item else item['name']
                 item['open'] = "{}?id={}".format('/showblue', label)
                 item['delete'] = "{}?id={}".format('/delblue', label)
-            return data  # , blue_columns
+            need_update = len(data) != len(old_data)
 
-        """
-        @app.callback(
-            [
-                Output('url', 'href'),
-                #Output('url', 'search')
-            ],
-            Input("blueprints_table", "cellClick")
-        )
-        def redirect_by_button(cell):
-            print(isinstance(cell, str))
-            print(cell)
-            cell = json.loads(cell)
-            print(isinstance(cell, dict))
-            print("$$$ {}".format(cell['column']['field']))
-            if cell['column']['field'] == 'open':
-                print(cell['value']['open'])
-                return cell['value']['open']
-            if cell['column']['field'] == 'delete':
-                print(cell['value']['delete'])
-                return cell['value']['delete']
-            print('no match')
-            PreventUpdate
-        """
+            if not need_update:
+                for item in data:
+                    for old in old_data:
+                        if old['id'] == item['id']:
+                            if item['status'] != old['status'] or item['detailed_status'] != old['detailed_status']:
+                                print("------ {} != {} or {} != {} ----update True".format(item['status'], old['status'], item['detailed_status'], old['detailed_status']))
+                                need_update = True
+                                break
+            res = data if need_update else dash.no_update
+            return res  # , blue_columns
+

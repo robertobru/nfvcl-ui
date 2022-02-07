@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import dash
 import visdcc
 from dash_extensions.enrich import Output, Input, State
 
@@ -104,6 +105,8 @@ def blue_nsi_graph_data(blue_id, blue_item, nsi_, app):
             'image': app.get_asset_url('nsi_icon.png')
         })
         for vld in n['vld']:
+            if 'vim_info' not in vld or not list(vld['vim_info']):
+                continue
             vim_info_label = list(vld['vim_info'])[0]
             # print('^__^ vim_info: {}'.format(vim_info_label))
             if vld['vim_info'][vim_info_label]['vim_network_name'] not in [n_['id'] for n_ in nodes]:
@@ -216,7 +219,7 @@ class BlueDetailPage:
         config_box = Box("Blueprint Configuration", build_table("blue_detail_config", config_columns, config_data))
         action_box = Box("History of Day2 Actions", build_table("action_history", action_columns, []))
 
-        self.content = [
+        self.content = html.Div([
             dbc.Col(
                 dbc.Row(
                     status_bar(data)
@@ -253,20 +256,10 @@ class BlueDetailPage:
                 interval=refresh_interval * 1000,  # in milliseconds
 
             )
-        ]
+        ], style={'height': '900px'})
         return self.content
 
     def get_callbacks(self, app):
-        # @app.callback(
-        #     Output('blue_detail_graph', 'data'),
-        #     [
-        #         Input({'type': 'tabulator', 'id': 'nsi'}, "rowAdded"),
-        #         Input({'type': 'tabulator', 'id': 'nsi'}, 'rowDeleted')
-        #     ]
-        # )
-        # def blue_detail_redraw_vis(interval):
-        #     return self.vis_data
-
         @app.callback(
             [
                 Output({"id": "blue_detail", "type": "widget", "index": 4}, "value"),
@@ -281,10 +274,11 @@ class BlueDetailPage:
             Input('blue_detail_refresh_interval', 'n_intervals'),
             [
                 State('url', 'search'),
-                State({"id": "blue_detail", "type": "widget", "index": 1}, 'value')
+                State({"id": "blue_detail", "type": "widget", "index": 1}, 'value'),
+                State('blue_detail_graph', 'data')
             ]
         )
-        def blue_detail_refresh(interval, search, widget_id):
+        def blue_detail_refresh(interval, search, widget_id, previous_graph_data):
             if not search or search == '':
                 id_ = widget_id
             else:
@@ -299,6 +293,10 @@ class BlueDetailPage:
 
             blue_vnfi = live_data['vnf_data'][id_]
             vis_data = blue_nsi_graph_data(id_, data, nsi_data, self.app)
+            if len(vis_data['nodes']) == len(previous_graph_data['nodes']) and \
+                    len(vis_data['edges']) == len(previous_graph_data['edges']):
+                vis_data = dash.no_update
+
             config_data = [{'key': k, 'value': data['config'][k]} for k in data['config'].keys()]
             op_history_data = [{
                 'ns_name': item['primitive']['ns-name'],
@@ -306,6 +304,9 @@ class BlueDetailPage:
                 'result_status': item['result']['charm_status'],
                 'time': item['time']
             } for item in data['primitives']]
+
+
+
             # print('?????????????????????')
             # print(config_data)
             # print(op_history_data)
