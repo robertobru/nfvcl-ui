@@ -10,7 +10,7 @@ from apps.utils import *
 
 
 def status_bar(data):
-    print('####### {}'.format(data))
+
     return [
         dac.InfoBox(
             id={"id": "blue_detail", "type": "widget", "index": 1},
@@ -108,7 +108,6 @@ def blue_nsi_graph_data(blue_id, blue_item, nsi_, app):
             if 'vim_info' not in vld or not list(vld['vim_info']):
                 continue
             vim_info_label = list(vld['vim_info'])[0]
-            # print('^__^ vim_info: {}'.format(vim_info_label))
             if vld['vim_info'][vim_info_label]['vim_network_name'] not in [n_['id'] for n_ in nodes]:
                 nodes.append({
                     'id': vld['vim_info'][vim_info_label]['vim_network_name'],
@@ -219,7 +218,7 @@ class BlueDetailPage:
         config_box = Box("Blueprint Configuration", build_table("blue_detail_config", config_columns, config_data))
         action_box = Box("History of Day2 Actions", build_table("action_history", action_columns, []))
 
-        self.content = html.Div([
+        self.content = [
             dbc.Col(
                 dbc.Row(
                     status_bar(data)
@@ -237,7 +236,7 @@ class BlueDetailPage:
                     dbc.Col(
                         operations_box.get(), width=2
                     )
-                ]
+                ], style={'width': '100%'}
             ),
             dbc.Row([
                 dbc.Col(
@@ -249,14 +248,14 @@ class BlueDetailPage:
                 dbc.Col(
                     action_box.get(), width=4
                 )
-            ]),
+            ], style={'width': '100%'}),
 
             dcc.Interval(
                 id='blue_detail_refresh_interval',
                 interval=refresh_interval * 1000,  # in milliseconds
 
             )
-        ], style={'height': '900px'})
+        ]
         return self.content
 
     def get_callbacks(self, app):

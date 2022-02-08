@@ -154,7 +154,7 @@ home_elements = html.Div([
         interval=refresh_interval * 1000,  # in milliseconds
 
     )
-])
+], style={'margin': "6px"})
 
 
 class homePage(WebPage):

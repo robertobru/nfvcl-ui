@@ -69,7 +69,7 @@ sidebar = dac.Sidebar(
 )
 
 # Body
-body = dac.Body(dbc.Row(id='page-content', style={'height': '900px'}))
+body = dac.Body(dbc.Row(id='page-content', style={'height': '100%', 'width': '100%'}))
 
 # page_objs = [TopologyPage(app), ]
 topology_page = TopologyPage(app)
@@ -93,7 +93,7 @@ url_location = dcc.Location(id='url', refresh=False)
 # =============================================================================
 # App Layout
 # =============================================================================
-app.layout = dac.Page([url_location,  sidebar, navbar, body, ])  # , footer
+app.layout = dac.Page([navbar, url_location,  sidebar, body, ])  # , footer
 app.validation_layout = html.Div([
     url_location,
     navbar,
@@ -181,5 +181,5 @@ home_page.get_callbacks(app)
 # Run app
 # =============================================================================
 if __name__ == '__main__':
+    # app.run_server(debug=False)
     app.run_server(debug=True)
-    # app.run_server(debug=True)
