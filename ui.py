@@ -63,7 +63,7 @@ sidebar = dac.Sidebar(
     color="primary",
     brand_color="secondary",
     url="/#",
-    src=app.get_asset_url('5g_induce.png'),  # 160 x 160?
+    src=app.get_asset_url('spider_logo.png'),  # 160 x 160?
     elevation=3,
     opacity=0.8
 )
