@@ -4,3 +4,5 @@ visdcc~=0.0.40
 dash-tabulator~=0.4.2
 dash-admin-components
 dash-bootstrap-components
+dash-extensions~=0.0.67
+dash-ace~=0.2.1
