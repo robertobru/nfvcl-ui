@@ -5,7 +5,7 @@ import requests
 
 get_headers = {"Accept": "application/json"}
 post_headers = {"Accept": "application/json", "Content-type": "application/json"}
-nfvcl_base_url = "http://192.168.102.224:5003"
+nfvcl_base_url = "http://127.0.0.1:5003"
 
 topology_data_raw = {'vims': [], 'networks': [], 'routers': []}
 pdu_data_raw = []
