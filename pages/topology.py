@@ -167,8 +167,7 @@ nets_table = build_table(
         'label': 'Add Network',
         'id': 'add_net',
         'color': 'primary',
-        'href': '/addnet',
-        'width': '50px'
+        'href': '/addnet'
     }],
     intable_buttons=['delete', 'open'],
     interval={'delta_t': 3},
