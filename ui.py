@@ -33,9 +33,10 @@ app = DashProxy(prevent_initial_callbacks=True,
                 # transforms=[MultiplexerTransform()],
                 external_stylesheets=external_stylesheets,
                 )
+
 server = app.server
 app.title = 'NFVCL'
-
+app._favicon = "spider_logo.ico"
 # =============================================================================
 # Dash Admin Components
 # =============================================================================
