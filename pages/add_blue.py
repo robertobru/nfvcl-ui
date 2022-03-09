@@ -4,10 +4,6 @@ from dash_extensions.enrich import Output, Input, State, ALL
 from apps.data import *
 from apps.utils import *
 
-# base_data_scheme = {
-#     {'id': 'config', 'label': "Parameter Configuration", 'type': 'object'},
-#     {'id': 'vims', 'label': "Selection of TACs and VIMs", 'type': 'list'}
-# }
 
 form_data = {
     'Open5GS': [
@@ -71,7 +67,7 @@ class AddBluePage(WebPage):
                             ]),
                             dbc.Row(id='addblue_vim_config'),
                             dbc.Row(dbc.Button([html.I(className='fas fa-plus-circle'), "  Add TAC"],
-                                               id='addblue_addtac_button', color="info", style={'width': '140px'})),
+                                               id='addblue_addtac_button', color="info", width='140px')),
                             dbc.Row(dbc.Col([], id='addblue_tac_config'))
                         ],
                         width=12,
@@ -101,13 +97,15 @@ class AddBluePage(WebPage):
                         [html.I(className='fas fa-arrow-circle-right'), " Submit"],
                         id='addblue_submit_button',
                         color="primary",
-                        style={"display": "none", "margin-left": "6px", 'width': '140px'}
+                        style={"display": "none", "margin-left": "6px"},
+                        width='140px'
                     ),
                     dbc.Button(
                         [html.I(className='fas fa-edit'), " Edit"],
                         id='addblue_edit_button',
                         color="info",
-                        style={"display": "none", "margin-left": "20px", 'width': '140px'},
+                        style={"display": "none", "margin-left": "20px"},
+                        width='140px'
                     )
                 ]
                 ),
@@ -115,7 +113,7 @@ class AddBluePage(WebPage):
                 dbc.Row([
                     Box("Blueprint Creation Result", [], width=12, id='addblue_submit_result_form',
                     content_id='addblue_submit_result').get()
-                ], style={"display": "none"})
+                ], id='addblue_submit_result_row', style={"display": "none"})
             ], width=12)
 
         return blue_form_
@@ -239,7 +237,7 @@ class AddBluePage(WebPage):
 
         @app.callback(
             [
-                Output('addblue_submit_result_form', 'style'),
+                Output('addblue_submit_result_row', 'style'),
                 Output('addblue_submit_result', 'children')
             ],
             Input('addblue_submit_button', 'n_clicks'),
