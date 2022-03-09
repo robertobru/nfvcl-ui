@@ -136,8 +136,11 @@ class AddBluePage(WebPage):
                 config_params = config_input_panel_withopt(
                     config_fields, topology_data_raw, 'blue_add_data', submit_button=False
                 )
-                return config_params, vims_list, {"display": "block"}, {"display": "block", "margin-left": "6px"}, \
-                       {"display": "block", "margin-left": "20px"}, \
+                return config_params, \
+                       vims_list, \
+                       {"display": "block"}, \
+                       {"display": "block", "margin-left": "6px", "width": "140px"}, \
+                       {"display": "block", "margin-left": "20px", "width": "140px"}, \
                     # {"display": "block"}
 
         @app.callback(

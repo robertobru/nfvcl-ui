@@ -160,7 +160,7 @@ def config_input_panel_withopt(input_data, raw_data, type_tag, submit_button=Tru
                                raw_data=raw_data)]
     optional_inputs = [item for item in input_data if not item['mandatory']]
     if optional_inputs:
-        form.append(dbc.Row(dbc.Button([html.I(className='fas fa-add-circle'), " Options"],
+        form.append(dbc.Row(dbc.Button([html.I(className='fas fa-plus-circle'), " Options"],
                                 id='{}_addoptions_button'.format(type_tag), color="info", style={'width': '140px'})))
         form.append(dbc.Row(id='{}_optional_configs'.format(type_tag)))
     if submit_button:
