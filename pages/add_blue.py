@@ -112,8 +112,10 @@ class AddBluePage(WebPage):
                 ]
                 ),
                 #dbc.Row(dbc.Col([], id='addblue_submit_result', width=12))
-                Box("Blueprint Creation Result", [], width=12, id='addblue_submit_result_form',
+                dbc.Row([
+                    Box("Blueprint Creation Result", [], width=12, id='addblue_submit_result_form',
                     content_id='addblue_submit_result').get()
+                ], style={"display": "none"})
             ], width=12)
 
         return blue_form_
@@ -236,7 +238,10 @@ class AddBluePage(WebPage):
             return res
 
         @app.callback(
-            Output('addblue_submit_result', 'children'),
+            [
+                Output('addblue_submit_result_form', 'style'),
+                Output('addblue_submit_result', 'children')
+            ],
             Input('addblue_submit_button', 'n_clicks'),
             [
                 State('blue_type_dropdown', 'value'),
@@ -312,6 +317,5 @@ class AddBluePage(WebPage):
                     else:
                         color = 'danger'
 
-                    return dbc.Col(
-                        html.H5([dbc.Badge(code, color=color), json.dumps(rmesg)]),
-                        width=12, style={'background-color': 'light'})
+                    return {"display": "block"}, html.H5([dbc.Badge(code, color=color), json.dumps(rmesg)])
+                        #width=12, style={'background-color': 'light'}
