@@ -71,7 +71,7 @@ class AddBluePage(WebPage):
                             ]),
                             dbc.Row(id='addblue_vim_config'),
                             dbc.Row(dbc.Button([html.I(className='fas fa-plus-circle'), "  Add TAC"],
-                                               id='addblue_addtac_button', color="info")),
+                                               id='addblue_addtac_button', color="info", style={'width': '140px'})),
                             dbc.Row(dbc.Col([], id='addblue_tac_config'))
                         ],
                         width=12,
@@ -101,18 +101,19 @@ class AddBluePage(WebPage):
                         [html.I(className='fas fa-arrow-circle-right'), " Submit"],
                         id='addblue_submit_button',
                         color="primary",
-                        style={"display": "none", "margin-left": "6px"}
+                        style={"display": "none", "margin-left": "6px", 'width': '140px'}
                     ),
                     dbc.Button(
                         [html.I(className='fas fa-edit'), " Edit"],
                         id='addblue_edit_button',
                         color="info",
-                        style={"display": "none", "margin-left": "20px"}
+                        style={"display": "none", "margin-left": "20px", 'width': '140px'},
                     )
                 ]
                 ),
-                dbc.Row(dbc.Col([], id='addblue_submit_result', width=12))
-
+                #dbc.Row(dbc.Col([], id='addblue_submit_result', width=12))
+                Box("Blueprint Creation Result", [], width=12, id='addblue_submit_result_form',
+                    content_id='addblue_submit_result').get()
             ], width=12)
 
         return blue_form_
